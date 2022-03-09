@@ -64,6 +64,8 @@ const Nft = () => {
     })();
   }, [marketPlaceModule]);
 
+  console.log("market-listed", listings);
+
   return (
     <div>
       <Header />

@@ -44,7 +44,10 @@ const Collection = () => {
   const nftModule = useMemo(() => {
     if (!provider) return;
 
-    const sdk = new ThirdwebSDK(provider.getSigner());
+    const sdk = new ThirdwebSDK(
+      provider.getSigner(),
+      "https://eth-rinkeby.alchemyapi.io/v2/NvA3xNHpg9smwST5ynom-uvDscNaxj50"
+    );
     return sdk.getNFTModule(collectionId);
   }, [provider]);
 
@@ -103,6 +106,8 @@ const Collection = () => {
     fetchCollectionData();
   }, [collectionId]);
 
+  console.log("nfts", nfts);
+  console.log("listings", listings);
   // console.log(router.query);
   // console.log(router.query.collectionId);
   return (

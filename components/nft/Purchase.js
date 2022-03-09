@@ -41,24 +41,29 @@ const MakeOffer = ({ isListed, selectedNft, listings, marketPlaceModule }) => {
     quantityDesired = 1,
     module = marketPlaceModule
   ) => {
-    console.log(listingId, quantityDesired, module, "david");
-    // yo RAZA lets goooo!!!
-    //yo Qazi, ok
-    // sure okay about to run it...
-    // just clicked buy now...
-    // still error
-    // where can i see the contract address of the marketplace module
-    // in [nftId.js]
-    await module
-      .buyoutDirectListing({
+    // console.log(listingId, quantityDesired, module, "david");
+    try {
+      await module.buyoutDirectListing({
         listingId: listingId,
         quantityDesired: quantityDesired,
-      })
-      .catch((error) => console.error(error));
-
-    confirmPurchase();
+      });
+      confirmPurchase();
+    } catch (error) {
+      console.error(error);
+      console.log(error.message);
+      if (error.message.includes("insufficient funds")) {
+        toast.error("Insufficient funds🤑");
+      }
+      if (
+        error.message.includes(
+          "execution reverted: Marketplace: buying invalid amount of tokens"
+        )
+      ) {
+        toast.success("All ready soild it");
+      }
+    }
   };
-  // console.log(isListed);
+  console.log(isListed);
   return (
     <div className="flex h-20 w-full items-center rounded-lg border border-[#151c22] bg-[#303339] px-12">
       <Toaster position="bottom-left" reverseOrder={false} />
